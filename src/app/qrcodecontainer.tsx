@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { Link, Mail, Download, LayoutGrid } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -28,8 +29,6 @@ const QrCodeGenerator = () => {
     const [bgColor, setBgColor] = React.useState("#057FFF");
     const [url, setUrl] = React.useState("");
     const [logo, setLogo] = React.useState<string | null>(null);
-    const [logoFile, setLogoFile] = React.useState<string | null>(null);
-    const [qrType, setQrType] = React.useState("link");
     const [email, setEmail] = React.useState("");
     const [subject, setSubject] = React.useState("");
     const [message, setMessage] = React.useState("");
@@ -73,7 +72,7 @@ const QrCodeGenerator = () => {
             <Card className="flex-1 flex flex-col w-full h-auto mx-auto bg-[#ef7ff]/80 backdrop-blur-md shadow-sm border-2 border-white/40 rounded-xl">
                 <CardHeader>
                     <CardTitle className="text-3xl font-bold text-center text-[#273748]">
-                        My QR Code Generator
+                        Your QR Code Generator
                     </CardTitle>
                 </CardHeader>
 
@@ -83,7 +82,6 @@ const QrCodeGenerator = () => {
                             <Tabs
                                 defaultValue="link"
                                 className="space-y-6"
-                                onValueChange={(val) => setQrType(val)}
                             >
                                 <TabsList className="h-10 w-full grid grid-cols-2 bg-gray-800 text-lg">
                                     <TabsTrigger value="link" className="text-white font-bold">
@@ -185,10 +183,8 @@ const QrCodeGenerator = () => {
                                         type="file"
                                         id="logo"
                                         accept="image/*"
-                                        onChange={(e: any) => {
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                             if (e.target.files && e.target.files[0]) {
-                                                setLogoFile(e.target.files[0]);
-
                                                 const reader = new FileReader();
                                                 reader.onloadend = () => {
                                                     setLogo(reader.result as string);
@@ -198,6 +194,7 @@ const QrCodeGenerator = () => {
                                         }}
                                         className="w-full border-2 bg-transparent border-white/70 focus:border-[#057FFF]/70 rounded-md outline-none focus-visible:ring-0 placeholder:text-gray-400"
                                     />
+
                                 </div>
                             </Tabs>
                         </div>
@@ -283,12 +280,12 @@ const QrCodeGenerator = () => {
                                     />
 
                                     {logo && (
-                                        <img
+                                        <Image
                                             src={logo}
                                             alt="logo"
                                             className="absolute z-50 top-1/2 left-1/2 transform -translate-x-1/2 
-                        -translate-y-1/2 
-                        w-10 h-10 rounded-md border-none"
+                    -translate-y-1/2 
+                    w-10 h-10 rounded-md border-none"
                                         />
                                     )}
                                 </div>
